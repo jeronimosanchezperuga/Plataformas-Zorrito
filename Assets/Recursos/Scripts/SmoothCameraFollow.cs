@@ -5,6 +5,7 @@ using UnityEngine;
 public class SmoothCameraFollow : MonoBehaviour
 {
     public Transform target;
+    public Transform limitBottomLeft;
     public Vector3 offset;
     public float damping;
 
@@ -16,7 +17,9 @@ public class SmoothCameraFollow : MonoBehaviour
     }
     void FixedUpdate()
     {
-        Vector3 movePosition = target.position + offset;
+        float minX = Mathf.Clamp(target.position.x, limitBottomLeft.position.x, Mathf.Infinity) ;
+        float minY = Mathf.Clamp(target.position.y, limitBottomLeft.position.y, Mathf.Infinity) ;
+        Vector3 movePosition = new Vector3(minX, minY,0) + offset;
         transform.position = Vector3.SmoothDamp(transform.position,movePosition, ref velocity, damping);
     }
 }
