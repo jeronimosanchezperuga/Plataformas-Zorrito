@@ -49,5 +49,9 @@ public class ZorritoHealthOFC : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        else
+        {
+            healthPoints = maxHealthPoints;
+        }
     }
 }
