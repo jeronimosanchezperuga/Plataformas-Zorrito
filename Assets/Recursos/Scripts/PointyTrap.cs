@@ -37,5 +37,6 @@ public class PointyTrap : MonoBehaviour
     {
         playerGO.GetComponent<PlayerBlink>().Blink();
         playerGO.GetComponent<KnockBack>().ActivateKnockBack(transform);
+        playerGO.GetComponent<PlayerHealth>().LooseALife();
     }
 }

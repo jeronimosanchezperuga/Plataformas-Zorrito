@@ -8,21 +8,11 @@ public class KnockBack : MonoBehaviour
     Rigidbody2D rb;
     [SerializeField]private float knockBackDuration;
     [SerializeField]private float knockBackForce;
-    [SerializeField]private object obj;
+    [SerializeField]private Transform obj;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
-    private IEnumerator IKnockBack(float knockBackDuration, float knockBackForce, object obj)
-    {
-        throw new NotImplementedException();
     }
 
     public void ActivateKnockBack(Transform obj)
