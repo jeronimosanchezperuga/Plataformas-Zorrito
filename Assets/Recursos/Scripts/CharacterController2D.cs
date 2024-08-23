@@ -4,8 +4,8 @@ using UnityEngine.Events;
 public class CharacterController2D : MonoBehaviour
 {
 	[SerializeField] private float m_JumpForce = 400f;                          // Amount of force added when the player jumps.
-	[Range(0, 1)] [SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
-	[Range(0, .3f)] [SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
+	[Range(0, 1)][SerializeField] private float m_CrouchSpeed = .36f;          // Amount of maxSpeed applied to crouching movement. 1 = 100%
+	[Range(0, .3f)][SerializeField] private float m_MovementSmoothing = .05f;  // How much to smooth out the movement
 	[SerializeField] private bool m_AirControl = false;                         // Whether or not a player can steer while jumping;
 	[SerializeField] private LayerMask m_WhatIsGround;                          // A mask determining what is ground to the character
 	[SerializeField] private Transform m_GroundCheck;                           // A position marking where to check if the player is grounded.
@@ -29,8 +29,9 @@ public class CharacterController2D : MonoBehaviour
 
 	public BoolEvent OnCrouchEvent;
 	private bool m_wasCrouching = false;
+    public int jumpCount;
 
-	private void Awake()
+    private void Awake()
 	{
 		m_Rigidbody2D = GetComponent<Rigidbody2D>();
 
@@ -50,10 +51,11 @@ public class CharacterController2D : MonoBehaviour
 		// This can be done using layers instead but Sample Assets will not overwrite your project settings.
 		Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
 		for (int i = 0; i < colliders.Length; i++)
-		{
+		{            
 			if (colliders[i].gameObject != gameObject)
 			{
 				m_Grounded = true;
+				jumpCount = 0;
 				if (!wasGrounded)
 					OnLandEvent.Invoke();
 			}
@@ -125,9 +127,10 @@ public class CharacterController2D : MonoBehaviour
 			}
 		}
 		// If the player should jump...
-		if (m_Grounded && jump)
+		if ((m_Grounded || jumpCount < 1) && jump)
 		{
 			// Add a vertical force to the player.
+			jumpCount++;
 			m_Grounded = false;
 			m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
 		}

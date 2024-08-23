@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float runSpeed = 40f;
     float horizontalMove;
     bool jump = false;
-    bool crouch = false;
+    bool crouch = false; 
     [SerializeField] Animator anim;
 
     void Awake()
@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
         {
             jump = true;
             anim.SetBool("IsJumping", true);
+            
         }
 
         if (Input.GetAxisRaw("Vertical") < 0)
